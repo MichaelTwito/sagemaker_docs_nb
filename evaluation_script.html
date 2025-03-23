@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation Script Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .method {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        code {
+            background-color: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        pre {
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style> -->
+</head>
+<body>
+    <h1>Evaluation Script Documentation</h1>
+    <p>The evaluation script (evaluation.py) handles model performance assessment.</p>
+
+    <div class="method">
+        <h2>Main Function: evaluate_model</h2>
+        <pre>
+def evaluate_model(evaluating_prefix_dir):
+        </pre>
+        <p>Parameters:</p>
+        <ul>
+            <li><code>evaluating_prefix_dir</code>: Directory containing model and validation data</li>
+        </ul>
+    </div>
+
+    <div class="method">
+        <h2>Key Functions</h2>
+        <h3>calculate_metrics(true_labels, prob_scores, threshold)</h3>
+        <p>Calculates classification metrics including:</p>
+        <ul>
+            <li>Precision</li>
+            <li>Recall</li>
+            <li>F1 Score</li>
+            <li>Accuracy</li>
+            <li>TPR, TNR, FPR, FNR</li>
+        </ul>
+    </div>
+
+    <div class="method">
+        <h2>Output Metrics</h2>
+        <ul>
+            <li>Binary classification metrics</li>
+            <li>ROC curve data</li>
+            <li>Precision-Recall curve data</li>
+            <li>Confusion matrix</li>
+            <li>AUC scores</li>
+        </ul>
+    </div>
+
+    <a href="index.html">Back to Index</a>
+</body>
+</html> 

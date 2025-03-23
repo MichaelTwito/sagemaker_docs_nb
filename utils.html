@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilities Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .module {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        code {
+            background-color: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        pre {
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style> -->
+</head>
+<body>
+    <h1>Utilities Documentation</h1>
+    <p>Documentation for utility modules used across the pipeline.</p>
+
+    <div class="module">
+        <h2>operations.py</h2>
+        <p>Handles file operations and environment setup.</p>
+        
+        <h3>Key Functions:</h3>
+        <ul>
+            <li><code>initialize_preprocessing_env()</code>: Sets up processing directories</li>
+            <li><code>list_files_recursive()</code>: Recursively lists parquet files</li>
+            <li><code>save_df_to_file()</code>: Saves DataFrame to parquet/csv</li>
+            <li><code>create_directories_in_runtime_env()</code>: Creates necessary directories</li>
+            <li><code>save_preprocessing_artifacts()</code>: Saves processed data artifacts</li>
+        </ul>
+    </div>
+
+    <div class="module">
+        <h2>science.py</h2>
+        <p>Contains data processing and transformation logic.</p>
+        
+        <h3>Key Functions:</h3>
+        <ul>
+            <li><code>read_train_test_data()</code>: Reads and combines input data</li>
+            <li><code>drop_columns()</code>: Removes specified columns</li>
+            <li><code>encode_columns()</code>: Handles categorical encoding</li>
+            <li><code>replace_labeling_column()</code>: Repositions target column</li>
+            <li><code>split_df_to_dfs()</code>: Splits data into train/val/test</li>
+        </ul>
+    </div>
+
+    <div class="module">
+        <h2>decorators.py</h2>
+        <p>Contains logging and utility decorators.</p>
+        
+        <h3>Key Components:</h3>
+        <ul>
+            <li><code>logger</code>: Decorator for function logging</li>
+            <li><code>get_logging_level()</code>: Maps string levels to logging levels</li>
+        </ul>
+        
+        <h3>Usage Example:</h3>
+        <pre>
+@logger(level='info', message='Processing data')
+def process_function():
+    # Function implementation
+        </pre>
+    </div>
+
+    <div class="module">
+        <h2>Common Utilities</h2>
+        <p>Shared functionality across modules:</p>
+        <ul>
+            <li>Error handling</li>
+            <li>Logging configuration</li>
+            <li>File operations</li>
+            <li>Data validation</li>
+        </ul>
+    </div>
+
+    <a href="index.html">Back to Index</a>
+</body>
+</html> 

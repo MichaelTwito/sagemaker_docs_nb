@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploying Module Documentation</title>
+    <style>
+/* Common styles - can be extracted to a separate CSS file */
+:root {
+    --primary-green: #1b5e20;
+    --secondary-green: #43a047;
+    --light-green: #e8f5e9;
+    --dark-green: #0a3d0a;
+    --accent-green: #66bb6a;
+    --border-radius: 10px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --code-bg: #f0f9f0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+    color: #333;
+    background-color: #fafafa;
+}
+
+.navbar {
+    background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+    color: white;
+    padding: 15px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+}
+
+.navbar h1 {
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.navbar .breadcrumb {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.navbar .breadcrumb a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar .breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    display: flex;
+    min-height: calc(100vh - 130px);
+}
+
+.sidebar {
+            width: 250px !important;;
+            min-width: 250px;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            background-color: white;
+            padding: 30px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+        }
+
+.sidebar-section {
+    padding: 0 20px;
+    margin-bottom: 25px;
+}
+
+.sidebar-title {
+    font-size: 1.1rem;
+    color: var(--dark-green);
+    margin-bottom: 15px;
+    font-weight: 600;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--light-green);
+}
+
+.sidebar-links a {
+    display: block;
+    padding: 8px 15px;
+    margin: 5px 0;
+    color: #555;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.sidebar-links a:hover {
+    background-color: var(--light-green);
+    color: var(--primary-green);
+    transform: translateX(5px);
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+.header {
+    background: linear-gradient(to right, white, var(--light-green));
+    padding: 30px;
+    border-radius: var(--border-radius);
+    margin-bottom: 30px;
+    border-left: 5px solid var(--primary-green);
+    box-shadow: var(--shadow);
+}
+
+.header h1 {
+    color: var(--dark-green);
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.header p {
+    color: #555;
+    font-size: 1.1rem;
+}
+
+.section {
+    margin: 40px 0;
+}
+
+h2 {
+    color: var(--dark-green);
+    margin: 30px 0 15px 0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+h2::before {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 20px;
+    background-color: var(--primary-green);
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+.method {
+    background-color: white;
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin: 20px 0;
+    transition: transform 0.2s ease;
+    border-left: 3px solid var(--accent-green);
+}
+
+.method:hover {
+    transform: translateY(-3px);
+}
+
+.method h3 {
+    color: var(--primary-green);
+    margin-bottom: 15px;
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+
+code {
+    background-color: var(--code-bg);
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9em;
+    color: var(--dark-green);
+}
+
+pre {
+    background-color: var(--code-bg);
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 15px 0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    border-left: 3px solid var(--accent-green);
+}
+
+ul, ol {
+    padding-left: 25px;
+    margin: 15px 0;
+}
+
+li {
+    margin: 8px 0;
+}
+
+p {
+    margin: 15px 0;
+}
+
+.back-link {
+    display: inline-block;
+    margin: 40px 0 20px;
+    padding: 10px 20px;
+    background-color: var(--primary-green);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+
+.back-link:hover {
+    background-color: var(--dark-green);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #666;
+    background-color: white;
+    margin-top: 50px;
+    border-top: 1px solid #eee;
+}
+
+.flow-chart {
+            background-color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+        }
+
+.flow-step {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background-color: var(--light-green);
+    border-left: 4px solid var(--primary-green);
+    position: relative;
+}
+
+.flow-step:not(:last-child):after {
+    content: "↓";
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    font-size: 20px;
+    color: var(--primary-green);
+}
+
+.flow-decision {
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+    background-color: #fff3e0;
+    border-left: 4px solid #ff9800;
+    position: relative;
+}
+
+.flow-branch {
+    display: flex;
+    justify-content: space-between;
+    margin: 35px 0;
+}
+
+.flow-path {
+    flex: 1;
+    max-width: 45%;
+    padding: 10px;
+    position: relative;
+}
+
+.flow-path:first-child:after {
+    content: "Yes";
+    position: absolute;
+    top: -25px;
+    right: 50%;
+    font-size: 14px;
+    color: #666;
+}
+
+.flow-path:last-child:after {
+    content: "No";
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    font-size: 14px;
+    color: #666;
+}
+
+.flow-end {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    background-color: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+    }
+    .content {
+        padding: 20px;
+    }
+    .flow-branch {
+        flex-direction: column;
+    }
+    .flow-path {
+        max-width: 100%;
+        margin-bottom: 30px;
+    }
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>SageMaker Pipeline Documentation</h1>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> > Deploying Module
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">On This Page</h3>
+                <div class="sidebar-links">
+                    <a href="#class-deploy">Class: Deploy</a>
+                    <a href="#lambda-step">Lambda Step</a>
+                    <a href="#deployment-process">Deployment Process</a>
+                    <a href="#deployment-flow">Deployment Flow</a>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Other Modules</h3>
+                <div class="sidebar-links">
+                    <a href="index.html">Main Index</a>
+                    <a href="preprocessing.html">Preprocessing</a>
+                    <a href="evaluating.html">Evaluation</a>
+                    <a href="deploy.html">Deploying</a>
+                </div>
+            </div>
+        </aside>
+    
+    
+        <main class="content">
+            <div class="header">
+                <h1>Deploying Module Documentation</h1>
+                <p>The Deploy module utilizes a LambdaStep with a Lambda function that handles the deployment process for trained models.</p>
+            </div>
+    
+            <div class="section" id="class-deploy">
+                <h2>Class: Deploy</h2>
+                <div class="method">
+                    <h3>Constructor</h3>
+                    <pre>def __init__(self, pipeline_session, role, pipeline_name, base_job_name, s3_base_path, region):</pre>
+                    <p>Initializes the deployment module, setting up parameters for model deployment.</p>
+                    <p><strong>Parameters:</strong></p>
+                    <ul>
+                        <li><code>pipeline_session</code>: SageMaker pipeline session</li>
+                        <li><code>role</code>: IAM role for execution</li>
+                        <li><code>pipeline_name</code>: Name of the pipeline</li>
+                        <li><code>base_job_name</code>: Base name for jobs (serves as batch_id)</li>
+                        <li><code>s3_base_path</code>: S3 path for data storage</li>
+                        <li><code>region</code>: AWS region</li>
+                    </ul>
+                </div>
+            </div>
+    
+            <div class="section" id="lambda-step">
+                <h2>Lambda Step</h2>
+                <div class="method">
+                    <h3>Overview</h3>
+                    <p>The Deploy module uses a LambdaStep to trigger an AWS Lambda function that handles the deployment process. This approach allows for complex deployment logic without adding complexity to the SageMaker pipeline.</p>
+                    <pre>from sagemaker.workflow.lambda_step import LambdaStep
+
+lambda_step = LambdaStep(
+    name="DeployModels",
+    lambda_func=lambda_function,
+    inputs={
+        "batch_id": base_job_name,
+        "s3_artifact_path": s3_artifacts_path,
+        "model_count": total_model_count
+    }
+)</pre>
+                    <p>The Lambda function is responsible for coordinating the deployment process, including checking completion status, bundling artifacts, and updating the production environment.</p>
+                </div>
+            </div>
+    
+            <div class="section" id="deployment-process">
+                <h2>Deployment Process</h2>
+                <div class="method">
+                    <h3>Lambda Function Steps</h3>
+                    <p>The Lambda function that handles deployment follows this process:</p>
+                    <ol>
+                        <li>Receives the <code>batch_id</code> (which is the <code>base_job_name</code>) and checks the management DynamoDB table to determine how many regions have completed model training for this batch</li>
+                        <li>Compares the total number of expected model artifacts with the current completed model artifacts count:
+                            <ul>
+                                <li>If <code>total_number_of_model_artifacts > current_completed_models_artifacts</code>, the process terminates</li>
+                                <li>Otherwise, it proceeds with deployment</li>
+                            </ul>
+                        </li>
+                        <li>Compresses all model artifacts into a single <code>tar.gz</code> file where each model is identified by its region ID (0...N)</li>
+                        <li>Reads from Parameter Store to identify the current non-active DynamoDB table name</li>
+                        <li>Copies the compressed <code>tar.gz</code> file to the production path in S3</li>
+                        <li>Updates the environment variables of the <code>decision_tree_inference</code> service to force a cold start</li>
+                        <li>Updates the environment variables of the <code>realtime-invoker</code> to read from the current production table (the non-active one)</li>
+                        <li>Swaps the non-active and active table names in the system</li>
+                    </ol>
+                </div>
+            </div>
+    
+            <div class="section" id="deployment-flow">
+                <h2>Deployment Flow</h2>
+                <div class="flow-chart">
+                    <div class="mermaid">
+                        graph TD;
+                            A[Start Deployment] -->|Trigger Lambda| B[Check Model Completion];
+                            B -->|All Models Ready?| C{Decision};
+                            C -->|Yes| D[Compress Model Artifacts];
+                            D --> E[Copy to Production S3];
+                            E --> F[Update Service Environment];
+                            F --> G[Swap Table Names];
+                            G --> H[Deployment Complete];
+                            C -->|No| I[Wait for More Artifacts];
+                    </div>
+                </div>
+            </div>
+            
+    
+            <a href="index.html" class="back-link">Back to Index</a>
+    
+            <footer>
+                <p>SageMaker NextBus Prediction Pipeline Documentation</p>
+            </footer>
+        </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.4.0/mermaid.min.js"></script>
+<script>
+    mermaid.initialize({ startOnLoad: true });
+</script>
+
+</body>
+</html>

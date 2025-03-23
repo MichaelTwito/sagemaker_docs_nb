@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preprocessing Script Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .method {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        code {
+            background-color: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        pre {
+            background-color: #f8f8f8;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style> -->
+</head>
+<body>
+    <h1>Preprocessing Script Documentation</h1>
+    <p>The preprocessing script (preprocessing.py) handles data preparation and feature engineering.</p>
+
+    <div class="method">
+        <h2>Main Function: process_data</h2>
+        <pre>
+def process_data(label_col, processing_prefix_dir, index_col_name, prediction_point):
+        </pre>
+        <p>Parameters:</p>
+        <ul>
+            <li><code>label_col</code>: Name of the target column (default: 'churn_ind')</li>
+            <li><code>processing_prefix_dir</code>: Directory for processing I/O</li>
+            <li><code>index_col_name</code>: Name of the index column (default: 'account_gk')</li>
+            <li><code>prediction_point</code>: Prediction date cutoff</li>
+        </ul>
+    </div>
+
+    <div class="method">
+        <h2>Data Processing Steps</h2>
+        <ol>
+            <li>Read and combine input data from parquet files</li>
+            <li>Replace labeling column position</li>
+            <li>Drop unnecessary columns</li>
+            <li>Split data into train, validation, and prediction sets</li>
+            <li>Clean and prepare data for model training</li>
+            <li>Save processed datasets to appropriate locations</li>
+        </ol>
+    </div>
+
+    <div class="method">
+        <h2>Output Artifacts</h2>
+        <ul>
+            <li>train.parquet: Training dataset</li>
+            <li>validation.parquet: Validation dataset</li>
+            <li>validation_with_index.parquet: Validation dataset with index</li>
+            <li>data_to_predict.parquet: Data for prediction</li>
+        </ul>
+    </div>
+
+    <a href="index.html">Back to Index</a>
+</body>
+</html> 

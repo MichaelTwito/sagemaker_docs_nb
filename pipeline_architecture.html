@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeline Architecture Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-green: #1b5e20;
+            --secondary-green: #43a047;
+            --light-green: #e8f5e9;
+            --dark-green: #0a3d0a;
+            --accent-green: #66bb6a;
+            --border-radius: 10px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0;
+            color: #333;
+            background-color: #fafafa;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            color: white;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .navbar h1 {
+            font-size: 1.6rem;
+            font-weight: 500;
+        }
+        
+        .main-content {
+            display: flex;
+            min-height: calc(100vh - 130px);
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            padding: 30px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 70px;
+            height: calc(100vh - 70px);
+            overflow-y: auto;
+        }
+        
+        .sidebar-section {
+            padding: 0 20px;
+            margin-bottom: 25px;
+        }
+        
+        .sidebar-title {
+            font-size: 1.1rem;
+            color: var(--dark-green);
+            margin-bottom: 15px;
+            font-weight: 600;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--light-green);
+        }
+        
+        .sidebar-links a {
+            display: block;
+            padding: 8px 15px;
+            margin: 5px 0;
+            color: #555;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+        
+        .sidebar-links a:hover {
+            background-color: var(--light-green);
+            color: var(--primary-green);
+            transform: translateX(5px);
+        }
+        
+        .content {
+            flex: 1;
+            padding: 30px;
+        }
+        
+        .header {
+            background: linear-gradient(to right, white, var(--light-green));
+            padding: 30px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary-green);
+            box-shadow: var(--shadow);
+        }
+        
+        .header h1 {
+            color: var(--dark-green);
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 2rem;
+        }
+        
+        .header p {
+            color: #555;
+            font-size: 1.1rem;
+        }
+        
+        .section {
+            margin: 40px 0;
+        }
+        
+        .section h2 {
+            color: var(--dark-green);
+            margin-bottom: 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section h2::before {
+            content: "";
+            display: inline-block;
+            width: 5px;
+            height: 20px;
+            background-color: var(--primary-green);
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+        
+        .module-group {
+            background-color: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin: 20px 0;
+            transition: transform 0.3s ease;
+        }
+        
+        .module-group:hover {
+            transform: translateY(-5px);
+        }
+        
+        .module-group h3 {
+            color: var(--primary-green);
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .module-list {
+            list-style-type: none;
+        }
+        
+        .module-list li {
+            margin: 15px 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .module-card {
+            display: block;
+            padding: 16px 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-green);
+            transition: all 0.3s ease;
+        }
+        
+        .module-card:hover {
+            background-color: var(--light-green);
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .module-list a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+        
+        .description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #666;
+            background-color: white;
+            margin-top: 50px;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+            }
+            .content {
+                padding: 20px;
+            }
+        }
+            </style>
+</head>
+<body>
+    <h1>SageMaker Pipeline Architecture</h1>
+    <p>This document describes the overall architecture and flow of the NextBus prediction pipeline.</p>
+
+    <div class="section">
+        <h2>Pipeline Overview</h2>
+        <p>The pipeline is designed to creat a model that predicts customer NextBus using a sequence of steps:</p>
+        <ol>
+            <li>Data Preprocessing</li>
+            <li>Model Training</li>
+            <li>Model Evaluation</li>
+            <li>Model Deploy</li>
+        </ol>
+        <p>Note that there are two ways to run each pipeline:</p>
+        <ol>
+            <li><strong>DEV mode</strong> - When developing, you need to run the pipeline from the main notebook.</li>
+            <li><strong>PROD mode</strong> - In production, the pipeline should be executed from a step function.</li>
+        </ol>
+        The required params to invoke the pipeline with is:
+        <ol>
+            <li>base_job_name</li>
+            <li>preprocessing_input_data_uri</li>
+            <li>num_class</li>
+        </ol>
+        When invoking in DEV mode, change the defaults of thoose parameters to the desired once. 
+        <h2>Important sidenote</h2>
+        After every change you do in the code, you <b>MUST</b> run the pipeline in DEV mode(running the notebook)
+        Before you run in in PROD mode, as running the pipeline in DEV mode is setting the snapshot of the pipeline.
+    </div>
+    
+
+    <div class="section">
+        <h2>Data Flow</h2>
+        <div class="flow-diagram">
+            <pre>
+Raw Data → Preprocessing → Training Data → Model Training → Model Evaluation → Model Deploy
+            </pre>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Key Components</h2>
+        <h3>1. Preprocessing</h3>
+        <ul>
+            <li>Data cleaning and feature engineering</li>
+            <li>Train/validation split</li>
+            <li>Feature encoding</li>
+        </ul>
+
+        <h3>2. Training</h3>
+        <ul>
+            <li>XGBoost model training</li>
+            <li>Hyperparameter optimization</li>
+            <li>Model artifact generation</li>
+        </ul>
+
+        <h3>3. Evaluation</h3>
+        <ul>
+            <li>Model performance metrics</li>
+            <li>Validation data predictions</li>
+            <li>Metrics reporting</li>
+        </ul>
+
+        <h3>4. Deploy Model Artifact</h3>
+        <ul>
+            <li>Move the articat to S3 prod path</li>
+            <li>Refresh the warm start of the lambdas</li>
+            <li>Sets env variables of the lambdas</li>
+            <li>Replace the not-active with the active in param store</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Infrastructure</h2>
+        <ul>
+            <li>AWS SageMaker for model training and deployment</li>
+            <li>S3 for data and artifact storage</li>
+            <li>VPC configuration for network security</li>
+            <li>IAM roles for access control</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Usage Example</h2>
+        <div class="code-example">
+            <pre>
+# Pipeline execution example
+pipeline = Pipeline(
+    name="NextBusPipeline",
+    parameters=[...],
+    steps=[
+        preprocessing_step,
+        training_step,
+        evaluation_step,
+        registration_step,
+        deploy_step
+    ]
+)
+            </pre>
+        </div>
+    </div>
+
+    <a href="index.html">Back to Index</a>
+</body>
+</html> 

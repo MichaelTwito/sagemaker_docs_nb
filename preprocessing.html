@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preprocessing Module Documentation</title>
+    <style>
+ /* Common styles - can be extracted to a separate CSS file */
+:root {
+    --primary-green: #1b5e20;
+    --secondary-green: #43a047;
+    --light-green: #e8f5e9;
+    --dark-green: #0a3d0a;
+    --accent-green: #66bb6a;
+    --border-radius: 10px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --code-bg: #f0f9f0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+    color: #333;
+    background-color: #fafafa;
+}
+
+.navbar {
+    background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+    color: white;
+    padding: 15px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+}
+
+.navbar h1 {
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.navbar .breadcrumb {
+    margin-top: 5px;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.navbar .breadcrumb a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar .breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    display: flex;
+    min-height: calc(100vh - 130px);
+}
+
+.sidebar {
+    width: 250px;
+    background-color: white;
+    padding: 30px 0;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 70px;
+    height: calc(100vh - 70px);
+    overflow-y: auto;
+}
+
+.sidebar-section {
+    padding: 0 20px;
+    margin-bottom: 25px;
+}
+
+.sidebar-title {
+    font-size: 1.1rem;
+    color: var(--dark-green);
+    margin-bottom: 15px;
+    font-weight: 600;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--light-green);
+}
+
+.sidebar-links a {
+    display: block;
+    padding: 8px 15px;
+    margin: 5px 0;
+    color: #555;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.sidebar-links a:hover {
+    background-color: var(--light-green);
+    color: var(--primary-green);
+    transform: translateX(5px);
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+.header {
+    background: linear-gradient(to right, white, var(--light-green));
+    padding: 30px;
+    border-radius: var(--border-radius);
+    margin-bottom: 30px;
+    border-left: 5px solid var(--primary-green);
+    box-shadow: var(--shadow);
+}
+
+.header h1 {
+    color: var(--dark-green);
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.header p {
+    color: #555;
+    font-size: 1.1rem;
+}
+
+.section {
+    margin: 40px 0;
+}
+
+h2 {
+    color: var(--dark-green);
+    margin: 30px 0 15px 0;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+}
+
+h2::before {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 20px;
+    background-color: var(--primary-green);
+    margin-right: 10px;
+    border-radius: 3px;
+}
+
+.method {
+    background-color: white;
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin: 20px 0;
+    transition: transform 0.2s ease;
+    border-left: 3px solid var(--accent-green);
+}
+
+.method:hover {
+    transform: translateY(-3px);
+}
+
+.method h3 {
+    color: var(--primary-green);
+    margin-bottom: 15px;
+    font-weight: 500;
+    font-size: 1.25rem;
+}
+
+code {
+    background-color: var(--code-bg);
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 0.9em;
+    color: var(--dark-green);
+}
+
+pre {
+    background-color: var(--code-bg);
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 15px 0;
+    font-family: 'Consolas', 'Monaco', monospace;
+    border-left: 3px solid var(--accent-green);
+}
+
+ul, ol {
+    padding-left: 25px;
+    margin: 15px 0;
+}
+
+li {
+    margin: 8px 0;
+}
+
+p {
+    margin: 15px 0;
+}
+
+.back-link {
+    display: inline-block;
+    margin: 40px 0 20px;
+    padding: 10px 20px;
+    background-color: var(--primary-green);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.2s ease;
+}
+
+.back-link:hover {
+    background-color: var(--dark-green);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #666;
+    background-color: white;
+    margin-top: 50px;
+    border-top: 1px solid #eee;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        position: static;
+        height: auto;
+    }
+    .content {
+        padding: 20px;
+    }
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>SageMaker Pipeline Documentation</h1>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> > Preprocessing Module
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">On This Page</h3>
+                <div class="sidebar-links">
+                    <a href="#class-preprocess">Class: Preprocess</a>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#key-methods">Key Methods</a>
+                    <a href="#utilities">Utilities</a>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Other Modules</h3>
+                <div class="sidebar-links">
+                    <a href="index.html">Main Index</a>
+                    <a href="training.html">Training</a>
+                    <a href="evaluating.html">Evaluation</a>
+                    <a href="deploy.html">Deploying</a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <div class="header">
+                <h1>Preprocessing Module Documentation</h1>
+                <p>The preprocessing module handles data preparation for the ML pipeline.</p>
+            </div>
+
+            <div class="section" id="class-preprocess">
+                <h2>Class: Preprocess</h2>
+                <div class="method">
+                    <h3>Constructor</h3>
+                    <pre>def __init__(self, pipeline_session, role, pipeline_name, base_job_name, s3_base_path):</pre>
+                    <p>Initializes the preprocessing module, setting up parameters for processing steps.</p>
+                    <p><strong>Parameters:</strong></p>
+                    <ul>
+                        <li><code>pipeline_session</code>: SageMaker pipeline session</li>
+                        <li><code>role</code>: IAM role for execution</li>
+                        <li><code>pipeline_name</code>: Name of the pipeline</li>
+                        <li><code>base_job_name</code>: Base name for jobs</li>
+                        <li><code>s3_base_path</code>: S3 path for data storage</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section" id="how-it-works">
+                <h2>How the SKLearn Processor Works</h2>
+                <p>The SKLearn processor in SageMaker executes preprocessing steps in an isolated environment. The sequence of execution is as follows:</p>
+                <ol>
+                    <li><strong>Instance Launch:</strong> A new SageMaker processing instance of the specified type (e.g., <code>ml.m5.4xlarge</code>) is started.</li>
+                    <li><strong>Mounting Inputs:</strong> 
+                        <ul>
+                            <li>Data from the specified S3 input path is mounted to <code>/opt/ml/processing/input</code>.</li>
+                            <li>Additional dependencies are mounted from <code>./preprocessing/dependencies/</code> to <code>/opt/ml/processing/input/code/dependencies/</code>.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Executing Preprocessing Script:</strong>
+                        <ul>
+                            <li>The script <code>preprocessing.py</code> runs inside the processing container.</li>
+                            <li>It reads input data, processes it (e.g., train-test split), and writes output files.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Saving Outputs:</strong>
+                        <ul>
+                            <li>Processed training data is saved in <code>/opt/ml/processing/output/train</code> and uploaded to S3.</li>
+                            <li>Validation and prediction datasets are stored similarly in their respective directories.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Instance Termination:</strong> Once processing is complete, the instance shuts down automatically.</li>
+                </ol>
+            </div>
+
+            <div class="section" id="key-methods">
+                <h2>Key Methods</h2>
+                <div class="method">
+                    <h3>create_processor()</h3>
+                    <p>Creates a SKLearn processor for data preprocessing with specified configurations.</p>
+                    <pre>def create_processor(self):</pre>
+                </div>
+
+                <div class="method">
+                    <h3>create_step()</h3>
+                    <p>Creates a ProcessingStep for the pipeline.</p>
+                    <pre>def create_step(self):</pre>
+                </div>
+            </div>
+
+            <div class="section" id="utilities">
+                <h2>Utilities</h2>
+                <p>The module includes utility functions in the utils package:</p>
+                <ul>
+                    <li><code>operations.py</code>: Handles file operations and environment setup</li>
+                    <li><code>science.py</code>: Contains data processing and transformation logic</li>
+                </ul>
+            </div>
+
+            <a href="index.html" class="back-link">Back to Index</a>
+
+            <footer>
+                <p>SageMaker NextBus Prediction Pipeline Documentation</p>
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
